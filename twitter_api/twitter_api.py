@@ -2,9 +2,18 @@ import twitter
 
 import optparse
 import sys
+import os
 
-def print_tweet(tweet):
-    print tweet.GetText().encode('cp437', 'xmlcharrefreplace')
+def encode(tweet):
+    """
+    Encode a tweet so it can be safely printed to the
+    terminal, depending on operating system type.
+    """
+    if os.name == 'nt':     # Windows
+        encoding = 'cp437'
+    else:
+        encoding = 'utf8'   # Mac / Linux
+    return tweet.GetText().encode(encoding, 'xmlcharrefreplace')
 
 def search(search_term):
     """
@@ -13,7 +22,7 @@ def search(search_term):
     api = twitter.Api()
     tweets = api.GetSearch(search_term)
     for tweet in tweets:
-        print_tweet(tweet)
+        print encode(tweet)
 
 def trending_topics():
     """
