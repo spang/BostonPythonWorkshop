@@ -19,37 +19,45 @@ using it in the search function.
 5. Replace
 
     for tweet in tweets:
-        print tweet.GetText()
+        print encode(tweet)
 
 with
 
     for tweet in tweets:
         print type(tweet)
-        print tweet
+        print encode(tweet)
 
 and discuss what each tweet contains. Undo the replacement when you
 are done. Talk about what type() does. `tweet` is an instance of
-twitter.Status: look at the Status class in the source code at
+twitter.Status:
 
-http://code.google.com/p/python-twitter/source/browse/twitter.py
+6. Interactively work through the following exercise: change search to
+print the Twitter username of the sender along with the tweet's text.
+Use python's introspection to introduce interactively asking python
+what it knows about unknown modules / classes.
 
-and match instance variable to what you saw in the output of "print
-tweet". Make it clear that they don't have to understand all of this
-right now -- we're just getting feel for the code layout and what the
-API exposes for us.
+Type the following code into an interactive prompt:
 
-Look at the GetText method.
+     >>> import twitter
+     >>> api = twitter.Api()
+     >>> tweets = api.GetSearch('#bospythonworkshop') # or your custom term
+     >>> tweet = tweets[0]
+     >>> help(tweet)
 
-6. Look at the GetUser method in the source code. Explain that there
-is a User class the represents all the data that makes up a user, so
-to get the Twitter name of a user we'll have to get an instance of the
-User class from GetUser, then get the Twitter name from that instance
-somehow. Encourage them to look at the source code and see if they can
-use the comments and method names to figure out how to get the Twitter
-username.
+Talk about how powerful help() is!  You don't even have to look up the source
+code or documentation; python can do it for you.
 
-EXERCISE: change search to print the Twitter username of the sender
-along with the tweet's text.
+Explain the getter/setter convention if necessary.
+
+Use the documentation to figure out the method for finding
+the username of the person who posted the tweet. (Note:
+it's totally unintuitive that you need to press 'q' to
+get out of help()! Share this arcana.)
+
+    >>> screenname = tweet.GetScreenName()
+
+Modify the print statement in the code to print, with
+appropriate formatting.
 
 7. Walk through the code in trending_topics. Talk about what
 GetTrendsCurrent returns.
